@@ -1,0 +1,97 @@
+@import "./pallete.less";
+
+.contact-item {
+    border-radius: 18px;
+    border: @border;
+    margin-bottom: 32px;
+    cursor: pointer;
+    header {
+        padding: 12px;
+        border-bottom: @border;
+        display: flex;
+        align-items: center;
+
+        h3 {
+            margin: 0;
+            width: fit-content;
+        }
+
+        .category {
+            // text-transform: capitalize;
+            opacity: 0.5;
+            margin-left: auto;
+            // margin-right: 8px;
+            // border: @border;
+            border-radius: 8px;
+            // padding: 4px;
+            // background: linear-gradient(45deg, #034, #805);
+        }
+    }
+
+    width: 100%;
+
+    section {
+        padding: 12px;
+        display: grid;
+        grid-template-columns: 1fr;
+
+        li {
+            text-transform: capitalize;
+            margin: 0;
+            width: fit-content;
+        }
+
+        .options {
+            display: flex;
+            justify-content: end;
+            // border-top: 1px solid transparent;
+            width: 100%;
+            gap: 8px;
+            padding-top: 12px;
+            button {
+                display: flex;
+                border: none;
+                outline: none;
+                padding: 0;
+                background-color: transparent;
+                transition: transform 0.25s ease-in-out;
+                &.delete{
+                    color: #c55;
+                }
+                &:hover{
+                    transform: rotate(15deg);
+                }
+            }
+
+            // height: 0px;
+            max-height: 0px;
+            transition: max-height 0.25s ease-in-out;
+            overflow: hidden;
+        }
+    }
+
+    &:focus section .options {
+        height: fit-content;
+        // border-top: @border;
+        max-height: 50px;
+    }
+    transition: opacity 0.25s ease-in-out, box-shadow 0.5s ease-in-out;
+    &:focus {
+        cursor: default;
+        opacity: 1;
+        box-shadow: 5px 5px 25px #0005;
+        // background-color: blue;
+    }
+
+    &:not(:focus) {
+        opacity: 0.25;
+        // background-color: red;
+    }
+}
+
+body:not(:has(.contact-item:focus)) {
+    .contact-item {
+        opacity: 1 !important;
+        // background-color: red;
+    }
+}

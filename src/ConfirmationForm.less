@@ -1,0 +1,34 @@
+@import "./pallete.less";
+
+body:has(.confirmation-form){
+    overflow: hidden;
+}
+.confirmation-form-frame {
+    z-index: 99;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #0009;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .confirmation-form {
+        background-color: @formsBackgroundColor;
+        padding: 12px;
+        border-radius: 18px;
+        p{
+            width: 100%;
+            text-align: center;
+        }
+        .bottom-bar {
+            display: flex;
+            gap: 12px;
+            button {
+                border-radius: 12px;
+            }
+        }
+    }
+}

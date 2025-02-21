@@ -3,7 +3,7 @@ import fs from 'fs'
 import Item from './Item'
 import Content from './Content'
 import SearchInput from './SearchInput'
-import { KruceoDB } from './kruceoDB'
+import { KruceoDB, Types } from './kruceoDB'
 import { useEffect, useState } from 'react'
 import ConfirmationForm from './ConfirmationForm'
 import NewContactForm from './NewContactForm'
@@ -14,7 +14,20 @@ function VoidElement() {
 
 export default function App() {
 
-  const db = new KruceoDB("./test.json")
+  const db = new KruceoDB("./DB.json")
+
+  db.createTableIfNotExists("contacts", {
+    name: Types.string,
+    category: Types.number
+  })
+  db.createTableIfNotExists("contacts-items", {
+    contactID: Types.number,
+    name: Types.string,
+    type: Types.number,
+    value: Types.string
+  })
+
+
   const [data, setData] = useState<ContactWItem[]>([])
   const [search, setSearch] = useState("")
 
@@ -28,7 +41,7 @@ export default function App() {
   const [limit, setLimit] = useState(100)
 
   useEffect(() => {
-    const d = db.read<ContactWItem>('contacts', { limit: limit, where: search != "" ? [["name", "ILIKE", search]] : undefined, include: [{ tableName: "contacts-items", key: "contactID", compareToKey: 'ID' }] })
+    const d = db.read<ContactWItem>('contacts', { limit: limit + 1, where: search != "" ? [["name", "ILIKE", search]] : undefined, include: [{ tableName: "contacts-items", key: "contactID", compareToKey: 'ID' }] })
     setData(d)
   }, [__update])
 
@@ -97,17 +110,21 @@ export default function App() {
     <Content>
       {/* <span className="category material-symbols-outlined">group</span> */}
       <div className="sub-bar">
-      <SearchInput className='search' onChange={(s) => { setSearch(s); setLimit(100); updateList() }}></SearchInput>
+        <SearchInput className='search' onChange={(s) => { setSearch(s); setLimit(100); updateList() }}></SearchInput>
         <button onClick={() => setDynamicForm(() => <NewContactForm onConfirm={(c, ci) => { writeNewContact(c, ci); setDynamicForm(VoidElement); updateList() }} onDecline={() => setDynamicForm(VoidElement)} />)}>
           <span className="material-symbols-outlined">post_add</span></button>
       </div>
-      {data.map(c => <Item key={c.ID} contact={c} onEdit={editContactHandler} onDelete={deleteContactHandler} />)}
-      <header className='pagination'>
-        <button className='pagination' onClick={() => {
-          setLimit(limit + 100);
-          updateList()
-        }}>...</button>
-      </header>
+      {data.slice(0, limit).map(c => <Item key={c.ID} contact={c} onEdit={editContactHandler} onDelete={deleteContactHandler} />)}
+      {
+        data.length > limit ?
+          <header className='pagination'>
+            <button className='pagination' onClick={() => {
+              setLimit(limit + 100);
+              updateList()
+            }}>...</button>
+          </header>
+          : null
+      }
     </Content>
   </>
 }

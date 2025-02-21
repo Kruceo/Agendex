@@ -9,17 +9,24 @@ header.pagination {
 }
 
 .sub-bar {
-  flex-wrap: wrap;
   margin-bottom: 16px;
 
   display: flex;
+  flex-wrap: wrap;
+  // display: grid;
+  // grid-template-columns: 1fr 1fr 1fr;
   // justify-content: end;
   gap: 8px;
-
   .search {
-    width: min(100%, 700px)
+    width: 100%;
   }
 
+  @media (min-width:650px) {
+    .search{
+      width: 300px;
+    }
+  }
+  
   >button {
     margin-left: auto;
     padding: 12px;
@@ -45,7 +52,7 @@ header.pagination {
 }
 
 label:has(select#category) {
-  width: fit-content;
+  // width: min(30%, 350px);
   appearance: none;
   padding: 12px;
   border-radius: 18px;

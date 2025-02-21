@@ -2,10 +2,10 @@ import { app, BrowserWindow } from 'electron'
 // import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
-import { createRequire } from 'node:module'
+// import { createRequire } from 'node:module'
 
-const require = createRequire(import.meta.url)
-const __filename = fileURLToPath(import.meta.url);
+// const require = createRequire(import.meta.url)
+// const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 //
@@ -26,14 +26,14 @@ export const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist')
 process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, 'public') : RENDERER_DIST
 
 let win: BrowserWindow | null
-
+app.setName("Agendex")
 function createWindow() {
   win = new BrowserWindow({
-    icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
+    icon: path.join(process.env.VITE_PUBLIC, 'agendex.svg'),
     webPreferences: {
-      nodeIntegration:true,
-      contextIsolation:false,
-      preload: path.join(__dirname, 'preload.mjs'),
+      nodeIntegration: true,
+      contextIsolation: false,
+      preload: path.join(MAIN_DIST, 'preload.mjs'),
     },
   })
 
@@ -48,6 +48,7 @@ function createWindow() {
     win.loadURL(VITE_DEV_SERVER_URL)
   } else {
     // win.loadFile('dist/index.html')
+    console.log("RENDERER_DIST =", RENDERER_DIST)
     win.loadFile(path.join(RENDERER_DIST, 'index.html'))
   }
 }

@@ -1,5 +1,4 @@
 import './App.less'
-import fs from 'fs'
 import Item from './Item'
 import Content from './Content'
 import SearchInput from './SearchInput'

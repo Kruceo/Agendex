@@ -12,7 +12,7 @@ export type TypesType = valuesOf<typeof Types>
 
 type DefaultEntrie = Record<string, string | number>
 
-type PossibleReadOutput = Record<string, string | number | Record<string, number | string>[]>
+// type PossibleReadOutput = Record<string, string | number | Record<string, number | string>[]>
 
 interface Table {
     data: { [x: string]: DefaultEntrie },

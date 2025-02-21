@@ -1,8 +1,17 @@
 {
-  "name": "agendas",
+  "name": "agendex",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "build": {
+    "files": [
+      "dist/**/*",
+      "public/**/*",
+      "dist-electron/**/*",
+      "electron/**/*",
+      "package.json"
+    ]
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && electron-builder",
@@ -11,12 +20,9 @@
     "postinstall": "install-app-deps"
   },
   "dependencies": {
-    "@types/better-sqlite3": "^7.6.12",
-    "better-sqlite3": "^11.8.1",
     "less": "^4.2.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "sqlite3": "^5.1.7"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.64",

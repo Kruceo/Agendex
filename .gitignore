@@ -12,6 +12,8 @@ dist
 dist-ssr
 dist-electron
 test.*
+out.*
+DB.json
 *.local
 
 # Editor directories and files

@@ -3,6 +3,7 @@ import Item from './Item'
 import Content from './Content'
 import SearchInput from './SearchInput'
 import { KruceoDB, Types } from './kruceoDB'
+import type { Where } from './kruceoDB'
 import { useEffect, useState } from 'react'
 import ConfirmationForm from './ConfirmationForm'
 import NewContactForm from './NewContactForm'
@@ -39,8 +40,20 @@ export default function App() {
 
   const [limit, setLimit] = useState(100)
 
+  const [filterCategory, setFilterCategory] = useState<number>()
+
   useEffect(() => {
-    const d = db.read<ContactWItem>('contacts', { limit: limit + 1, where: search != "" ? [["name", "ILIKE", search]] : undefined, include: [{ tableName: "contacts-items", key: "contactID", compareToKey: 'ID' }] })
+    const where: Where<Contact> = []
+    if (search != "") {
+      where.push(["name", "ILIKE", search])
+    }
+    if (search != "" && filterCategory) {
+      where.push("&")
+    }
+    if (filterCategory) {
+      where.push(["category", "EQ", filterCategory])
+    }
+    const d = db.read<ContactWItem>('contacts', { limit: limit + 1, where: where, include: [{ tableName: "contacts-items", key: "contactID", compareToKey: 'ID' }] })
     setData(d)
   }, [__update])
 
@@ -110,9 +123,21 @@ export default function App() {
       {/* <span className="category material-symbols-outlined">group</span> */}
       <div className="sub-bar">
         <SearchInput className='search' onChange={(s) => { setSearch(s); setLimit(100); updateList() }}></SearchInput>
-        <button onClick={() => setDynamicForm(() => <NewContactForm onConfirm={(c, ci) => { writeNewContact(c, ci); setDynamicForm(VoidElement); updateList() }} onDecline={() => setDynamicForm(VoidElement)} />)}>
+        <label htmlFor="category">
+          <select title='Categoria' defaultValue={-1} name="category" id="category" onChange={(e) => { const v = parseInt(e.target.value); setFilterCategory(v != -1 ? v : undefined); updateList() }}>
+            <option value="-1">Qualquer</option>
+            <option value="0">Desconhecido</option>
+            <option value="1">Funcionário</option>
+            <option value="2">Cliente</option>
+            <option value="3">Fornecedor</option>
+            <option value="4">Família</option>
+            <option value="5">Amigo</option>
+          </select>
+        </label>
+        <button title='Novo' onClick={() => setDynamicForm(() => <NewContactForm onConfirm={(c, ci) => { writeNewContact(c, ci); setDynamicForm(VoidElement); updateList() }} onDecline={() => setDynamicForm(VoidElement)} />)}>
           <span className="material-symbols-outlined">post_add</span></button>
       </div>
+
       {data.slice(0, limit).map(c => <Item key={c.ID} contact={c} onEdit={editContactHandler} onDelete={deleteContactHandler} />)}
       {
         data.length > limit ?

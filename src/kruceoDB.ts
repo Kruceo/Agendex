@@ -14,7 +14,7 @@ type DefaultEntrie = Record<string, string | number>
 
 // type PossibleReadOutput = Record<string, string | number | Record<string, number | string>[]>
 
-interface Table {
+export interface Table {
     data: { [x: string]: DefaultEntrie },
     meta: {
         lastID: number,
@@ -22,11 +22,9 @@ interface Table {
     }
 }
 
-type DB = Record<string, Table>
-
-type WhereOperation = "EQ" | "MT" | "LT" | "EMT" | "ELT" | "LIKE" | "ILIKE"
-
-
+export type DB = Record<string, Table>
+export type WhereOperation = "EQ" | "MT" | "LT" | "EMT" | "ELT" | "LIKE" | "ILIKE"
+export type Where<T = Record<string, string>> = ([keyof T, WhereOperation, number | string] | ("&" | "|"))[]
 
 export class KruceoDB {
     filepath: string;
@@ -45,7 +43,7 @@ export class KruceoDB {
         writeFileSync(this.filepath, JSON.stringify(all, null, 2))
     }
 
-    read<T>(table: string, options?: { useOpenedDB?: DB, where?: ([keyof T, WhereOperation, number | string] | ("&" | "|"))[], include?: { tableName: string, key: string, compareToKey: keyof T | "ID" }[], limit?: number }) {
+    read<T>(table: string, options?: { useOpenedDB?: DB, where?: Where<T>, include?: { tableName: string, key: string, compareToKey: keyof T | "ID" }[], limit?: number }) {
         const data: DB = options?.useOpenedDB ? options.useOpenedDB : JSON.parse(readFileSync(this.filepath, "utf-8"))
         let dataArray = Object.values(data[table].data) as T[]
 

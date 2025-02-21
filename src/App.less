@@ -9,16 +9,19 @@ header.pagination {
 }
 
 .sub-bar {
+  flex-wrap: wrap;
   margin-bottom: 16px;
-  width: 100%;
+
   display: flex;
   // justify-content: end;
   gap: 8px;
+
   .search {
-    width: 100%;
+    width: min(100%, 700px)
   }
 
   >button {
+    margin-left: auto;
     padding: 12px;
     border-radius: 18px;
     display: flex;
@@ -28,15 +31,43 @@ header.pagination {
     border: @border;
     outline: none !important;
     // gap: 4px;
-    color:@borderColor;
+    color: @borderColor;
     transition: color 0.25s;
 
     span {
       // margin-left: 4px;
     }
 
-    &:hover {
+    &:hover,&:focus {
       color: initial;
+    }
+  }
+}
+
+label:has(select#category) {
+  width: fit-content;
+  appearance: none;
+  padding: 12px;
+  border-radius: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: @border;
+  outline: none !important;
+  // gap: 4px;
+  color: @borderColor;
+  transition: color 0.25s;
+  select{
+    background-color: transparent;
+    border: none;
+    color:@borderColor;
+    outline: none;
+    &:focus{
+      color: initial;
+    }
+    option{
+      background-color:#222;
     }
   }
 }

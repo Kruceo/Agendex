@@ -32,7 +32,7 @@ export default function NewContactForm(props: { onConfirm: (contact: Contact, co
                 <div className="item">
                     <input autoFocus required name="name" id="name" type="text" placeholder="Nome" defaultValue={props.editThis?.name} />
                     <select required name="category" id="category" defaultValue={props.editThis?.category}>
-                        <option value="1">Desconhecido</option>
+                        <option value="0">Desconhecido</option>
                         <option value="1">Funcionário</option>
                         <option value="2">Cliente</option>
                         <option value="3">Fornecedor</option>

@@ -5,6 +5,7 @@
     border: @border;
     margin-bottom: 32px;
     cursor: pointer;
+
     header {
         padding: 12px;
         border-bottom: @border;
@@ -36,7 +37,10 @@
         grid-template-columns: 1fr;
 
         li {
-            text-transform: capitalize;
+            strong {
+                text-transform: capitalize;
+            }
+
             margin: 0;
             width: fit-content;
         }
@@ -48,6 +52,7 @@
             width: 100%;
             gap: 8px;
             padding-top: 12px;
+
             button {
                 display: flex;
                 border: none;
@@ -55,10 +60,12 @@
                 padding: 0;
                 background-color: transparent;
                 transition: transform 0.25s ease-in-out;
-                &.delete{
+
+                &.delete {
                     color: #c55;
                 }
-                &:hover{
+
+                &:hover {
                     transform: rotate(15deg);
                 }
             }
@@ -75,7 +82,10 @@
         // border-top: @border;
         max-height: 50px;
     }
-    transition: opacity 0.25s ease-in-out, box-shadow 0.5s ease-in-out;
+
+    transition: opacity 0.25s ease-in-out,
+    box-shadow 0.5s ease-in-out;
+
     &:focus {
         cursor: default;
         opacity: 1;

@@ -13,7 +13,7 @@ export default function (props: { contact: ContactWItem, onEdit?: (cnt: ContactW
                 {
                     props.contact['contacts-items'].map(m => {
                         return <li key={m.ID}>
-                            <strong>{m.name}: </strong>{m.value}
+                            <strong>{m.name}: </strong>{m.type == 0 ? formatPhoneNumber(m.value) : m.value}
                         </li>
                     })
                 }
@@ -72,5 +72,20 @@ function convertCategory2Icon(id: number) {
         default:
             return "person"
             break;
+    }
+}
+
+function formatPhoneNumber(n: string) {
+    switch (n.length) {
+        case 8:
+            return `${n.substring(0, 4)}-${n.substring(4)}`;
+        case 9:
+            return `${n.substring(0, 5)}-${n.substring(5)}`;
+        case 10:
+            return `${n.substring(0, 2)} ${n.substring(2, 6)}-${n.substring(6)}`;
+        case 11:
+            return `${n.substring(0, 2)} ${n.substring(2, 7)}-${n.substring(7)}`;
+        default:
+            return n;
     }
 }

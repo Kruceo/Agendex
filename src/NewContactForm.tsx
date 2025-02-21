@@ -30,7 +30,7 @@ export default function NewContactForm(props: { onConfirm: (contact: Contact, co
             <div className="contact">
                 <h3>Credenciais</h3>
                 <div className="item">
-                    <input required name="name" id="name" type="text" placeholder="Nome" defaultValue={props.editThis?.name} />
+                    <input autoFocus required name="name" id="name" type="text" placeholder="Nome" defaultValue={props.editThis?.name} />
                     <select required name="category" id="category" defaultValue={props.editThis?.category}>
                         <option value="1">Desconhecido</option>
                         <option value="1">Funcionário</option>
@@ -45,19 +45,21 @@ export default function NewContactForm(props: { onConfirm: (contact: Contact, co
                 <header className="header">
                     <h3>Contatos</h3>
                     <div>
-                        <span onClick={() => contactCount > 1 ? setContactCount(contactCount - 1) : null}>-</span>
-                        <span onClick={() => setContactCount(contactCount + 1)}>+</span>
+                        <span tabIndex={0} onKeyDown={(e => e.key == "Enter" && contactCount > 1 ? setContactCount(contactCount - 1): null)} onClick={() => contactCount > 1 ? setContactCount(contactCount - 1) : null}>-</span>
+                        <span tabIndex={0} onKeyDown={(e => e.key == "Enter" ?setContactCount(contactCount + 1): null)} onClick={() => setContactCount(contactCount + 1)}>+</span>
                     </div>
                 </header>
                 <div className="items">
 
                     {
-                        " ,".repeat(contactCount - 1).split(",").map((_, i) =>
-                            <div className="item" key={i}>
-                                <input required name="item-name" type="text" placeholder="Nome do Contato" defaultValue={props.editThis?.["contacts-items"].at(i)?.name} />
-                                <input required name="item-value" type="text" placeholder="Numero ou Email" defaultValue={props.editThis?.["contacts-items"].at(i)?.value} />
-                            </div>
-                        )
+                        contactCount > 0 ?
+                            " ,".repeat(contactCount - 1).split(",").map((_, i) =>
+                                <div className="item" key={i}>
+                                    <input required name="item-name" type="text" placeholder="Nome do Contato" defaultValue={props.editThis?.["contacts-items"].at(i)?.name} />
+                                    <input required name="item-value" type="text" placeholder="Numero ou Email" defaultValue={props.editThis?.["contacts-items"].at(i)?.value} />
+                                </div>
+                            )
+                            : null
                     }
                 </div>
             </div>

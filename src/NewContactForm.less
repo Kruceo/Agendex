@@ -54,7 +54,10 @@ body:has(.new-contact-form){
 
                 select {
                     width: 30%;
-
+                    color: @borderColor;
+                    &:focus{
+                        color: initial;
+                    }
                     option {
                         background-color: black;
                     }

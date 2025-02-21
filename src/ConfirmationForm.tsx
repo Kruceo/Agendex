@@ -4,7 +4,7 @@ export default function ConfirmationForm(props: { onConfirm: () => void, onDecli
         <form className="confirmation-form" action={""} onSubmit={(e) => e.preventDefault()}>
             <p>Tem certeza?</p>
             <div className="bottom-bar">
-                <button onClick={props.onDecline}>Não</button>
+                <button autoFocus onClick={props.onDecline}>Não</button>
                 <button onClick={props.onConfirm}>Sim</button>
             </div>
         </form>

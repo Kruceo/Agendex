@@ -41,12 +41,11 @@ header.pagination {
     color: @borderColor;
     transition: color 0.25s;
 
-    span {
-      // margin-left: 4px;
-    }
-
     &:hover,&:focus {
-      color: initial;
+      @borderColor: #469;
+      border: @border;
+      // color:#469;
+      // color: initial;
     }
   }
 }
@@ -78,8 +77,6 @@ label:has(select#category) {
     }
   }
 }
-
-body #root {}
 
 @font-face {
   font-family: 'Material Symbols Outlined';

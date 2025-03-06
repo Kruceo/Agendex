@@ -1,6 +1,38 @@
-@borderColor:#6f6f6f;
+body {
+    --text: #cacaca;
+    --bg: #222222;
+    --formbg: #242424;
+    --borderColor: #777;
+
+    @media (prefers-color-scheme: light) {
+        --text: #242424;
+        --bg: #f9f9f9;
+        --formbg: #fcfcfc;
+        --borderColor: #777;
+    }
+
+    background-color: @backgroundColor;
+    color: @text;
+
+    button {
+        background-color: transparent;
+        @borderColor: @text;
+        outline: @border;
+        transition: color 250ms ease, outline 250ms ease;
+        // text-transform: ;
+        // color: @borderColor;
+        &:hover,&           
+        :focus {
+            color: #359;
+            background-color: @formsBackgroundColor;
+        }       
+    }
+}
+
+@text: var(--text);
+@borderColor: var(--borderColor);
 
 @border: 1px solid @borderColor;
 
-@formsBackgroundColor: #222222;
-@backgroundColor: #333333;
+@formsBackgroundColor: var(--formbg);
+@backgroundColor: var(--bg);

@@ -1,9 +1,14 @@
 {
   "name": "agendex",
+  "author": "Kruceo",
+  "description": "Simple contact book.",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "build": {
+    "appId": "com.kruceo.agendex",
+    "productName": "Agendex",
+    "icon": "public/agendex.png",
     "files": [
       "dist/**/*",
       "public/**/*",

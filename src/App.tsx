@@ -50,9 +50,11 @@ export default function App() {
     if (search != "" && filterCategory) {
       where.push("&")
     }
-    if (filterCategory) {
+
+    if (filterCategory !== undefined) {
       where.push(["category", "EQ", filterCategory])
     }
+
     const d = db.read<ContactWItem>('contacts', { limit: limit + 1, where: where, include: [{ tableName: "contacts-items", key: "contactID", compareToKey: 'ID' }] })
     setData(d)
   }, [__update])

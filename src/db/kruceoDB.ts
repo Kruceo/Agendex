@@ -62,12 +62,7 @@ export class KruceoDB {
                             return ac
                         }, {} as any)
                     reducedIncludes[includer.tableName] = reduced
-
-                    // console.log(includer)
-                    // const included = this.read(includer.tableName, { where: [[includer.key, "EQ", element[includer.compareToKey]]] })
-                    // element[includer.tableName] = included
                 }
-            console.log(reducedIncludes)
             let comparers: ((v: any) => boolean)[][] = [[]]
             if (options.where) {
                 for (const operation of options.where) {
@@ -75,7 +70,6 @@ export class KruceoDB {
                         comparers[comparers.length - 1].push(
                             (value: T) => {
                                 const [key, op, compareValue] = operation
-                                // console.log(key, op, compareValue)
                                 switch (op) {
                                     case "EQ":
                                         return value[key] == compareValue

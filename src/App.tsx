@@ -1,12 +1,12 @@
 import './App.less'
-import Item from './Item'
-import Content from './Content'
-import SearchInput from './SearchInput'
-import { KruceoDB, Types } from './kruceoDB'
-import type { Where } from './kruceoDB'
+import Item from './components/Item'
+import Content from './components/Content'
+import SearchInput from './components/SearchInput'
+import { KruceoDB, Types } from './db/kruceoDB'
+import type { Where } from './db/kruceoDB'
 import { useEffect, useState } from 'react'
-import ConfirmationForm from './ConfirmationForm'
-import NewContactForm from './NewContactForm'
+import ConfirmationForm from './components/ConfirmationForm'
+import NewContactForm from './components/NewContactForm'
 
 function VoidElement() {
   return <></>
@@ -61,11 +61,8 @@ export default function App() {
 
   function writeNewContact(contact: Contact, contactItems: ContactItemWithoutContactID[]) {
     const [writedContact] = db.write<Contact>('contacts', [contact])
-    // console.log(writedContact)
     const ci: ContactItem[] = contactItems.map(e => ({ ...e, contactID: writedContact.ID }))
-    // const writedItems = 
     db.write('contacts-items', ci)
-    // console.log(writedItems)
   }
 
   function deleteContact(contact: ContactWItem) {
